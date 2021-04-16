@@ -1,0 +1,94 @@
+#include<iostream>
+#include<algorithm>
+#define null 0
+using namespace std;
+template<class t>
+class stack
+{
+private:
+    struct node
+    {
+        t value;
+        node *next;
+    };
+    typedef node* ptr;
+    ptr new_node()
+    {
+        ptr p;
+        p=(ptr)malloc(sizeof(node));
+        return p;
+    }
+    ptr top ;
+public:
+    stack()
+    {
+        top=null;
+    }
+    bool isEmpty()
+    {
+        return top==null;
+    }
+    void add_node(t v)
+    {
+        ptr p=new_node();
+        p->value=v;
+        p->next=top;
+        top=p;
+    }
+    void del_node()
+    {
+        if(top==null)
+            cout<<"stack is empty!\n";
+        else
+        {
+            ptr l = top;
+            top = top->next;
+            l=l->next=null;
+            free(l);
+        }
+    }
+    void show()
+    {
+        if(isEmpty())
+        {
+            cout<<"stack is Empty...\n";
+            return;
+        }
+        ptr l=top;
+        while(l!=null)
+        {
+            cout<<l->value<<" ";
+            l=l->next;
+        }
+    }
+    t findMin()
+    {
+        if(isEmpty())
+        {
+            cout<<"stack is Empty...\n";
+        }
+        else
+        {
+            ptr l=top;
+            t minelement=top->value;
+            while(l!=null)
+            {
+                if(l->value < minelement)
+                    minelement=l->value;
+                l=l->next;
+            }
+            return minelement;
+        }
+    }
+};
+int main()
+{
+    stack<int> s;
+    s.add_node(3);
+    s.add_node(5);
+    s.add_node(4);
+    s.add_node(1);
+    s.del_node();
+    cout<<s.findMin()<<endl;
+    return 0;
+}
